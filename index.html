@@ -65,6 +65,96 @@
       border-radius: 8px;
       font-size: 14px;
     }
+
+    /*/////////////////////////////*/
+  .cert-card {
+    flex: 1; 
+    background: #3b4a6b;
+    border-radius: 12px;
+    padding: 15px 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    letter-spacing: 3px;
+    transition: transform 0.25s ease, background 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+
+  .cert-card:hover {
+    background: #465981;
+    transform: scale(1.05);
+  }
+
+  .cerf-icon {
+    margin-right: 20px;
+    float: left;
+    width: 40px;
+  }
+
+  .cert-text {
+    font-size: 1.1rem;
+    vertical-align: middle;
+   
+  }
+
+  #cert-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, background 0.4s ease;
+    z-index: 1000;
+  }
+
+  #cert-modal.show {
+    background: rgba(0,0,0,0.8);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #cert-modal-image {
+    max-width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.3);
+    transform: scale(0.8);
+    opacity: 0;
+    transition: all 0.4s ease;
+  }
+
+  #cert-modal.show #cert-modal-image {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  #cert-modal-close {
+    position: absolute;
+    top: 25px;
+    right: 40px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  #cert-modal-close:hover {
+    color: #9ad1ff;
+  }
+
+  #certificates-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    display: inline;
+    text-align: center;
+    display: flex;
+  justify-content: space-between; 
+  gap: 20px; 
+  width: 100%;
+  }
   </style>
 </head>
 <body>
@@ -113,9 +203,54 @@
       Junior Specialist, 2015–2018</p>
 
       <h2>Certificates</h2>
-      <p>QA Manual Testing Course — QATestLab</p>
-      <p>QA Automation Testing Course — SoftServe Academy</p>
-    </div>
+    <div>
+      <div>
+        <p>QA Manual Testing Course — QATestLab</p>
+        <p>QA Automation Testing Course — SoftServe Academy</p>
+      </div>
+      <div id="certificates-page">
+        <div class="cert-card" data-cert="cert-manual.jpg">
+          <img class="cerf-icon" src="https://img.icons8.com/?size=100&id=IooTwtEU26ki&format=png&color=FFFFFF">
+          <span class="cert-text">MANUAL</span>
+        </div>
+
+        <div class="cert-card" data-cert="cert-auto.jpg">
+          <img class="cerf-icon" src="https://img.icons8.com/?size=100&id=12647&format=png&color=FFFFFF">
+          <span class="cert-text">AUTOMATION</span>
+        </div>
+
+        <div id="cert-modal">
+          <span id="cert-modal-close">&times;</span>
+          <img id="cert-modal-image" alt="Certificate">
+        </div>
+
+<script>
+  (function() {
+    const modal = document.getElementById("cert-modal");
+    const modalImg = document.getElementById("cert-modal-image");
+    const closeBtn = document.getElementById("cert-modal-close");
+    const certCards = document.querySelectorAll(".cert-card");
+
+    // Відкриття модалки
+    certCards.forEach(card => {
+      card.addEventListener("click", () => {
+        const imageSrc = card.getAttribute("data-cert");
+        modalImg.src = imageSrc;
+        modal.classList.add("show");
+      });
+    });
+
+    // Закриття з анімацією
+    function closeModal() {
+      modal.classList.remove("show");
+    }
+
+    closeBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", e => {
+      if (e.target === modal) closeModal();
+    });
+  })();
+</script>
   </div>
 </body>
 </html>
